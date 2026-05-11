@@ -1,0 +1,497 @@
+:root {
+  color-scheme: dark;
+  --bg: #07090d;
+  --panel: #121923;
+  --panel-2: #182330;
+  --ink: #f4f1e8;
+  --muted: #aab3b8;
+  --line: #334452;
+  --gold: #edc766;
+  --teal: #55cfc2;
+  --violet: #8d7deb;
+  --red: #ef6767;
+  --green: #7bd47b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(85, 207, 194, 0.12), transparent 28rem),
+    radial-gradient(circle at 84% 20%, rgba(237, 199, 102, 0.1), transparent 24rem),
+    linear-gradient(140deg, #07090d, #101821 58%, #17141f);
+  color: var(--ink);
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+button {
+  border: 1px solid rgba(244, 241, 232, 0.22);
+  border-radius: 6px;
+  background: linear-gradient(180deg, #26384a, #182432);
+  color: var(--ink);
+  min-height: 2.45rem;
+  padding: 0 0.8rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover,
+button:focus-visible {
+  border-color: var(--gold);
+  outline: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  letter-spacing: 0;
+}
+
+h2 {
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+
+.shell {
+  width: min(1220px, calc(100vw - 24px));
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 18px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  gap: 16px;
+  align-items: center;
+}
+
+.main-screen,
+.sidebar section {
+  border: 1px solid rgba(244, 241, 232, 0.14);
+  border-radius: 8px;
+  background: rgba(18, 25, 35, 0.92);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+}
+
+.main-screen {
+  overflow: hidden;
+}
+
+.topbar {
+  min-height: 62px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(244, 241, 232, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: rgba(6, 9, 13, 0.5);
+}
+
+#place,
+.message,
+.guide p,
+#navigatorLine {
+  color: var(--muted);
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.viewport-wrap {
+  position: relative;
+  aspect-ratio: 720 / 460;
+  background: #06080b;
+}
+
+.range-badge {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  max-width: calc(100% - 28px);
+  border: 1px solid rgba(244, 241, 232, 0.18);
+  border-radius: 6px;
+  background: rgba(7, 9, 13, 0.72);
+  color: var(--ink);
+  padding: 0.36rem 0.58rem;
+  font-weight: 700;
+  font-size: 0.86rem;
+  pointer-events: none;
+}
+
+#viewport {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#viewport.bump {
+  animation: bump 160ms ease-out;
+}
+
+@keyframes bump {
+  25% {
+    transform: translateX(-4px);
+  }
+  60% {
+    transform: translateX(5px);
+  }
+}
+
+.encounter-flash {
+  position: absolute;
+  inset: 0;
+  background: rgba(237, 199, 102, 0.16);
+  animation: flash 360ms ease-out;
+  pointer-events: none;
+}
+
+@keyframes flash {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.battle {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(3, 5, 8, 0.68);
+}
+
+.battle.hidden {
+  display: none;
+}
+
+.battle-card {
+  width: min(600px, 100%);
+  border: 1px solid rgba(237, 199, 102, 0.42);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(24, 35, 48, 0.98), rgba(9, 13, 19, 0.98));
+  padding: 16px;
+}
+
+.enemy-plate {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.enemy-sprite {
+  width: 144px;
+  height: 144px;
+  border-radius: 8px;
+  border: 1px solid rgba(244, 241, 232, 0.14);
+  background: linear-gradient(135deg, #26384a, #111821);
+  animation: enemyFloat 1.6s ease-in-out infinite;
+}
+
+@keyframes enemyFloat {
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+#battleText {
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.battle-stats {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.enemy-hp,
+.member-line {
+  display: grid;
+  grid-template-columns: 8rem 1fr auto;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+}
+
+.meter {
+  height: 9px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(244, 241, 232, 0.13);
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--green), var(--teal));
+}
+
+.enemy-hp .meter span {
+  background: linear-gradient(90deg, var(--red), var(--gold));
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.actions button.selected {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(237, 199, 102, 0.25);
+  background: linear-gradient(180deg, #42515e, #243141);
+}
+
+.battle-help {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.command-deck {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  padding: 8px 12px;
+  border-top: 1px solid rgba(244, 241, 232, 0.1);
+  background: rgba(6, 9, 13, 0.42);
+}
+
+.command-deck button {
+  min-height: 2.45rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+#inspect {
+  grid-column: 1 / -1;
+}
+
+.message {
+  min-height: 58px;
+  padding: 11px 14px;
+  border-top: 1px solid rgba(244, 241, 232, 0.1);
+  line-height: 1.55;
+  background: rgba(6, 9, 13, 0.36);
+}
+
+.sidebar {
+  display: grid;
+  gap: 13px;
+}
+
+.sidebar section {
+  padding: 13px;
+}
+
+.navigator {
+  display: grid;
+  gap: 10px;
+}
+
+.live-portrait {
+  position: relative;
+  width: 164px;
+  height: 210px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(244, 241, 232, 0.16);
+  border-radius: 8px;
+  background:
+    linear-gradient(rgba(18, 25, 35, 0), rgba(18, 25, 35, 0.22)),
+    url("assets/portraits/lilium.png");
+  background-size: auto 100%;
+  background-position: 44% 50%;
+  animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  50% {
+    transform: translateY(2px);
+  }
+}
+
+.live-portrait.alert {
+  box-shadow: inset 0 0 0 999px rgba(239, 103, 103, 0.08);
+}
+
+#navigatorLine {
+  min-height: 3.2rem;
+  line-height: 1.55;
+}
+
+.party {
+  display: grid;
+  gap: 10px;
+}
+
+#partyList {
+  display: grid;
+  gap: 9px;
+}
+
+.member {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 9px;
+  align-items: center;
+  padding-bottom: 9px;
+  border-bottom: 1px solid rgba(244, 241, 232, 0.1);
+}
+
+.member-portrait {
+  width: 46px;
+  height: 54px;
+  object-fit: cover;
+  object-position: 50% 18%;
+  border: 1px solid rgba(244, 241, 232, 0.16);
+  border-radius: 6px;
+  background: #0b0f14;
+}
+
+.member-body {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.member:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.member strong {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.member small {
+  color: var(--muted);
+}
+
+.map-panel {
+  display: grid;
+  gap: 11px;
+}
+
+.objective {
+  color: var(--gold);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+#miniMap {
+  width: 192px;
+  height: 192px;
+  border: 1px solid rgba(244, 241, 232, 0.16);
+  border-radius: 6px;
+  background: #07090d;
+  image-rendering: pixelated;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend i {
+  width: 9px;
+  height: 9px;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.legend .path {
+  background: #d0c7a6;
+}
+
+.legend .event {
+  background: var(--gold);
+}
+
+.legend .boss {
+  background: var(--red);
+}
+
+dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+dt {
+  color: var(--muted);
+}
+
+dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.guide p {
+  line-height: 1.55;
+  margin-top: 8px;
+}
+
+@media (max-width: 940px) {
+  .shell {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .command-deck {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
